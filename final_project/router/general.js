@@ -50,4 +50,50 @@ public_users.get('/review/:isbn',function (req, res) {
     return res.status(200).send(books[isbn].reviews);
 });
 
+// Async/Await with Axios - Get all books
+async function getAllBooksAxios() {
+    try {
+        const response = await axios.get("http://localhost:5000/");
+        return response.data;
+    } catch (error) {
+        console.error(error.message);
+    }
+  }
+  
+  // Promise with Axios - Get book by ISBN
+  function getBooksByISBNAxios(isbn) {
+    return axios
+        .get(`http://localhost:5000/isbn/${isbn}`)
+        .then(response => response.data)
+        .catch(error => console.error(error.message));
+  }
+  
+  // Async/Await with Axios - Get books by author
+  async function getBooksByAuthorAxios(author) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/author/${encodeURIComponent(author)}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error(error.message);
+    }
+  }
+  
+  // Async/Await with Axios - Get books by title
+  async function getBooksByTitleAxios(title) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/title/${encodeURIComponent(title)}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error(error.message);
+    }
+  }
+
 module.exports.general = public_users;
+module.exports.getAllBooks = getAllBooksAxios;
+module.exports.getBooksByISBN = getBooksByISBNAxios;
+module.exports.getBooksByAuthor = getBooksByAuthorAxios;
+module.exports.getBooksByTitle = getBooksByTitleAxios;
